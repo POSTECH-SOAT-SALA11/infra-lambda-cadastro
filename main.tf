@@ -35,7 +35,8 @@ resource "aws_iam_role" "lambda_auth_clientes_exec_role" {
           Action = [
             "cognito-idp:ListUsers",
             "cognito-idp:AdminGetUser",
-            "cognito-idp:GetUser"
+            "cognito-idp:GetUser",
+            "cognito-idp:AdminCreateUser"
           ]
           Effect   = "Allow"
           Resource = "*"
@@ -53,12 +54,12 @@ resource "aws_iam_role" "lambda_auth_clientes_exec_role" {
 }
 
 #teste
-resource "aws_lambda_function" "lambda_auth_clientes" {
+resource "aws_lambda_function" "lambda_cad_clientes" {
   function_name = var.lambda_function_name
   s3_bucket     = var.s3_bucket_name
   s3_key        = var.lambda_s3_key
   handler       = "main.lambda_handler"
-  runtime       = "python3.11"
+  runtime       = "python3.8"
   role          = aws_iam_role.lambda_auth_clientes_exec_role.arn
   timeout       = 60
 }
